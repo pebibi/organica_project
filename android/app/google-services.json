@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "193020119046",
+    "project_id": "organica-db",
+    "storage_bucket": "organica-db.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:193020119046:android:45f9f47d0b182c8175db87",
+        "android_client_info": {
+          "package_name": "com.example.organica_project"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA7p1OOsrnKqHWJZ8gcpyUTQYlYRzuPiZg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
