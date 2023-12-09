@@ -32,7 +32,8 @@ class _ProductDetailsState extends State<ProductDetails> {
           builder: (context, snapshot) {
             if (snapshot.hasError) {
               return Text('Something went wrong! ${snapshot.error}');
-            } else if (snapshot.hasData) {
+            } else if (snapshot.hasData && snapshot.data!.exists) {
+              // Access user data
               final userData = snapshot.data!.data() as Map<String, dynamic>;
               final name = userData['name'] ?? 'Username not found';
               final email = userData['email'] ?? 'admin@example.com';
@@ -118,7 +119,7 @@ class _ProductDetailsState extends State<ProductDetails> {
               _showProductDescription(product);
             },
             child: Image.asset(
-              'Path to image', // Replace with the actual image path
+              '../lib/images/ORGANICA.png', // Replace with the actual image path
               width: 140,
               height: 140,
               fit: BoxFit.cover,

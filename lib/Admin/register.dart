@@ -77,7 +77,7 @@ class _RegisterState extends State<Register> {
                   minimumSize: const Size.fromHeight(50),
                 ),
                 onPressed: () {
-                  registerUser();
+                  createUser();
                 },
                 child: const Text('REGISTER'),
               ),

@@ -20,8 +20,9 @@ class _AddProductState extends State<AddProduct> {
   TextEditingController descriptionController = TextEditingController();
   TextEditingController supplierNameController = TextEditingController();
   TextEditingController supplierAddressController = TextEditingController();
-  late String errorMessage;
-  late bool isError;
+  String errorMessage = "";
+  bool isError = false;
+
   String selectedCategory = categories.first;
   String selectedAvailability = availabilities.first;
 
@@ -36,128 +37,103 @@ class _AddProductState extends State<AddProduct> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        child: Stack(
+        child: Column(
           children: [
-            Column(
-              children: [
-                Positioned(
-                  top: 40,
-                  left: 10,
-                  child: Row(
-                    children: [
-                      IconButton(
-                        icon: const Icon(Icons.arrow_back),
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                      ),
-                      const SizedBox(width: 20),
-                      Text(
-                        'Add Products',
-                        style: GoogleFonts.raleway(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Positioned(
-                  top: 100,
-                  left: MediaQuery.of(context).size.width / 2 - 170,
-                  child: GestureDetector(
-                    onTap: () {
-                      // Add functionality to choose/upload a photo
-                      // For example, show a file picker or open the camera
-                      // This is a placeholder, add your logic here
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Row(
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.arrow_back),
+                    onPressed: () {
+                      Navigator.pop(context);
                     },
-                    child: Container(
-                      width: 350,
-                      height: 250,
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: const Color.fromARGB(255, 87, 187, 139),
-                          width: 5.0,
-                        ),
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: const Icon(
-                        Icons.add_a_photo,
-                        size: 40,
-                        color: Color.fromARGB(255, 87, 187, 139),
-                      ),
+                  ),
+                  const SizedBox(width: 20),
+                  Text(
+                    'Add Products',
+                    style: GoogleFonts.raleway(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
                     ),
                   ),
-                ),
-                Positioned(
-                  top: 360,
-                  left: MediaQuery.of(context).size.width / 2 - 170,
-                  child: SizedBox(
-                    width: 350,
-                    child: Column(
-                      children: [
-                        const SizedBox(height: 15),
-                        Container(
-                          child: DropdownButton<String>(
-                            value: selectedCategory,
-                            onChanged: (String? newValue) {
-                              setState(() {
-                                selectedCategory = newValue!;
-                              });
-                            },
-                            items: categories
-                                .map<DropdownMenuItem<String>>((String value) {
-                              return DropdownMenuItem<String>(
-                                value: value,
-                                child: Text(value),
-                              );
-                            }).toList(),
-                          ),
-                        ),
-                        const SizedBox(height: 15),
-                        Container(
-                          child: DropdownButton<String>(
-                            value: selectedAvailability,
-                            onChanged: (String? newValue) {
-                              setState(() {
-                                selectedAvailability = newValue!;
-                              });
-                            },
-                            items: availabilities
-                                .map<DropdownMenuItem<String>>((String value) {
-                              return DropdownMenuItem<String>(
-                                value: value,
-                                child: Text(value),
-                              );
-                            }).toList(),
-                          ),
-                        ),
-                        const SizedBox(height: 20),
-                        buildTextField(titleController, 'Product Name'),
-                        const SizedBox(height: 20),
-                        buildTextField(priceController, 'Product Price'),
-                        const SizedBox(height: 20),
-                        buildTextField(quantityController, 'Product Quantity'),
-                        const SizedBox(height: 20),
-                        buildTextField(supplierNameController, 'Supplier Name'),
-                        const SizedBox(height: 20),
-                        buildTextField(
-                            supplierAddressController, 'Supplier Address'),
-                        const SizedBox(height: 20),
-                        buildTextField(
-                            descriptionController, 'Product Description'),
-                        const SizedBox(height: 20),
-                        buildElevatedButton('SUBMIT', submitProduct),
-                        const SizedBox(height: 20),
-                      ],
-                    ),
+                ],
+              ),
+            ),
+            Container(
+              width: 350,
+              height: 200,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(0),
+              ),
+              child: Image.asset(
+                '../lib/images/ORGANICA.png', // Change this to your image asset path
+                fit: BoxFit.cover,
+              ),
+            ),
+            SizedBox(
+              width: 350,
+              child: Column(
+                children: [
+                  const SizedBox(height: 15),
+                  buildDropdownButton(
+                    'Category',
+                    categories,
+                    selectedCategory,
+                    (String? newValue) {
+                      setState(() {
+                        selectedCategory = newValue!;
+                      });
+                    },
                   ),
-                ),
-              ],
+                  const SizedBox(height: 15),
+                  buildDropdownButton(
+                    'Availability',
+                    availabilities,
+                    selectedAvailability,
+                    (String? newValue) {
+                      setState(() {
+                        selectedAvailability = newValue!;
+                      });
+                    },
+                  ),
+                  const SizedBox(height: 20),
+                  buildTextField(titleController, 'Product Name'),
+                  const SizedBox(height: 20),
+                  buildTextField(priceController, 'Product Price'),
+                  const SizedBox(height: 20),
+                  buildTextField(quantityController, 'Product Quantity'),
+                  const SizedBox(height: 20),
+                  buildTextField(supplierNameController, 'Supplier Name'),
+                  const SizedBox(height: 20),
+                  buildTextField(supplierAddressController, 'Supplier Address'),
+                  const SizedBox(height: 20),
+                  buildTextField(descriptionController, 'Product Description'),
+                  const SizedBox(height: 20),
+                  buildElevatedButton('SUBMIT', submitProduct),
+                  const SizedBox(height: 20),
+                ],
+              ),
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget buildDropdownButton(String labelText, List<String> items,
+      String selectedValue, ValueChanged<String?> onChanged) {
+    return Container(
+      child: DropdownButton<String>(
+        value: selectedValue,
+        onChanged: onChanged,
+        items: items.map<DropdownMenuItem<String>>((String value) {
+          return DropdownMenuItem<String>(
+            value: value,
+            child: Text(value),
+          );
+        }).toList(),
       ),
     );
   }
