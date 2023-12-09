@@ -31,11 +31,6 @@ class _UpdateProductState extends State<UpdateProduct> {
   String selectedAvailability = availabilities.first;
 
   @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
   void initState() {
     super.initState();
     initializeFields();
@@ -56,14 +51,10 @@ class _UpdateProductState extends State<UpdateProduct> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        child: Stack(
+        child: Column(
           children: [
-            Container(
-              color: Colors.white,
-            ),
-            Positioned(
-              top: 40,
-              left: 10,
+            Padding(
+              padding: const EdgeInsets.all(10.0),
               child: Row(
                 children: [
                   IconButton(
@@ -83,97 +74,81 @@ class _UpdateProductState extends State<UpdateProduct> {
                 ],
               ),
             ),
-            Positioned(
-              top: 100,
-              left: MediaQuery.of(context).size.width / 2 - 170,
-              child: GestureDetector(
-                onTap: () {
-                  // Add functionality to choose/upload a photo
-                  // For example, show a file picker or open the camera
-                  // This is a placeholder, add your logic here
-                },
-                child: Container(
-                  width: 350,
-                  height: 250,
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: const Color.fromARGB(255, 87, 187, 139),
-                      width: 5.0,
-                    ),
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: const Icon(
-                    Icons.add_a_photo,
-                    size: 40,
-                    color: Color.fromARGB(255, 87, 187, 139),
-                  ),
-                ),
+            Container(
+              width: 350,
+              height: 200,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(0),
+              ),
+              child: Image.asset(
+                '../lib/images/ORGANICA.png',
+                width: 350,
+                height: 200,
+                fit: BoxFit.cover,
               ),
             ),
-            Positioned(
-              top: 360,
-              left: MediaQuery.of(context).size.width / 2 - 170,
-              child: SizedBox(
-                width: 350,
-                child: Column(
-                  children: [
-                    const SizedBox(height: 15),
-                    Container(
-                      child: DropdownButton<String>(
-                        value: selectedCategory,
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            selectedCategory = newValue!;
-                          });
-                        },
-                        items: categories
-                            .map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
-                      ),
+            SizedBox(
+              width: 350,
+              child: Column(
+                children: [
+                  const SizedBox(height: 15),
+                  Container(
+                    child: DropdownButton<String>(
+                      value: selectedCategory,
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          selectedCategory = newValue!;
+                        });
+                      },
+                      items: categories
+                          .map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
                     ),
-                    const SizedBox(height: 15),
-                    Container(
-                      child: DropdownButton<String>(
-                        value: selectedAvailability,
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            selectedAvailability = newValue!;
-                          });
-                        },
-                        items: availabilities
-                            .map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
-                      ),
+                  ),
+                  const SizedBox(height: 15),
+                  Container(
+                    child: DropdownButton<String>(
+                      value: selectedAvailability,
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          selectedAvailability = newValue!;
+                        });
+                      },
+                      items: availabilities
+                          .map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
                     ),
-                    const SizedBox(height: 20),
-                    buildTextField(titleController, 'Product Name'),
-                    const SizedBox(height: 20),
-                    buildTextField(priceController, 'Product Price'),
-                    const SizedBox(height: 20),
-                    buildTextField(quantityController, 'Product Quantity'),
-                    const SizedBox(height: 20),
-                    buildTextField(supplierNameController, 'Supplier Name'),
-                    const SizedBox(height: 20),
-                    buildTextField(
-                        supplierAddressController, 'Supplier Address'),
-                    const SizedBox(height: 20),
-                    buildTextField(
-                        descriptionController, 'Product Description'),
-                    const SizedBox(height: 20),
-                    buildElevatedButton('UPDATE', updateProduct),
-                    const SizedBox(height: 20),
-                    buildElevatedButton('DELETE', deleteProduct),
-                  ],
-                ),
+                  ),
+                  const SizedBox(height: 20),
+                  buildTextField(titleController, 'Product Name'),
+                  const SizedBox(height: 20),
+                  buildTextField(priceController, 'Product Price'),
+                  const SizedBox(height: 20),
+                  buildTextField(quantityController, 'Product Quantity'),
+                  const SizedBox(height: 20),
+                  buildTextField(supplierNameController, 'Supplier Name'),
+                  const SizedBox(height: 20),
+                  buildTextField(supplierAddressController, 'Supplier Address'),
+                  const SizedBox(height: 20),
+                  buildTextField(descriptionController, 'Product Description'),
+                  const SizedBox(height: 20),
+                  Row(
+                    children: [
+                      buildElevatedButton('UPDATE', updateProduct),
+                      buildElevatedButton('DELETE', deleteProduct),
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+                ],
               ),
             ),
           ],

@@ -1,11 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:organica_project/Admin/Add_Data.dart';
 import 'package:organica_project/Admin/Product_Details.dart';
-import 'package:organica_project/Admin/register.dart';
 import 'package:organica_project/authenticator.dart';
 import 'package:organica_project/firebase_options.dart';
-import 'package:organica_project/deliverymap.dart';
+import 'package:organica_project/search.dart';
+import 'package:organica_project/searchtry.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,12 +21,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const Register(),
+      home: const Authenticator(),
     );
   }
 }

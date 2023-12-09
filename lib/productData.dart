@@ -8,7 +8,6 @@ class Product {
   final String supplierName;
   final String supplierAddress;
   final String description;
- 
 
   Product({
     required this.id,
@@ -20,7 +19,6 @@ class Product {
     required this.supplierName,
     required this.supplierAddress,
     required this.description,
-  
   });
 
   static Product fromJson(Map<String, dynamic> json) => Product(
@@ -33,7 +31,6 @@ class Product {
         supplierName: json['supplierName'],
         supplierAddress: json['supplierAddress'],
         description: json['description'],
-        
       );
 
   Map<String, dynamic> toJson() => {
@@ -46,6 +43,5 @@ class Product {
         'supplierName': supplierName,
         'supplierAddress': supplierAddress,
         'description': description,
-        
       };
 }

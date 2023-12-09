@@ -1,20 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:organica_project/authenticator.dart';
 import 'package:organica_project/userAccount.dart';
 
-class Register extends StatefulWidget {
-  const Register({super.key});
+class AddAccount extends StatefulWidget {
+  const AddAccount({super.key});
 
   @override
-  State<Register> createState() => _RegisterState();
+  State<AddAccount> createState() => _AddAccountState();
 }
 
-class _RegisterState extends State<Register> {
+class _AddAccountState extends State<AddAccount> {
   TextEditingController namecontroller = TextEditingController();
   TextEditingController emailcontroller = TextEditingController();
-  TextEditingController passwordcontroller = TextEditingController();
   late String errormessage;
   late bool isError;
 
@@ -40,7 +37,7 @@ class _RegisterState extends State<Register> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'REGISTER',
+                'ADD DATA',
                 style: txtstyle,
               ),
               const SizedBox(height: 15),
@@ -62,24 +59,14 @@ class _RegisterState extends State<Register> {
                 ),
               ),
               const SizedBox(height: 15),
-              TextField(
-                obscureText: true,
-                controller: passwordcontroller,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Enter password',
-                  prefixIcon: Icon(Icons.lock),
-                ),
-              ),
-              const SizedBox(height: 15),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   minimumSize: const Size.fromHeight(50),
                 ),
                 onPressed: () {
-                  registerUser();
+                  createUser();
                 },
-                child: const Text('REGISTER'),
+                child: const Text('SAVE'),
               ),
               const SizedBox(height: 15),
               (isError)
@@ -107,54 +94,20 @@ class _RegisterState extends State<Register> {
     fontSize: 38,
   );
 
-// call the current user submethod to get the currently registered user
   Future createUser() async {
-    final user = FirebaseAuth.instance.currentUser!;
-    final userid = user.uid;
-    final docUser =
-        FirebaseFirestore.instance.collection('UserAccount').doc(userid);
-
-    final userAccount = UserAccount(
-      id: userid,
+    final docUser = FirebaseFirestore.instance.collection('UserAccount').doc();
+    final newUserAccount = UserAccount(
+      id: docUser.id,
       name: namecontroller.text,
       email: emailcontroller.text,
     );
-    final json = userAccount.toJson();
+
+    final json = newUserAccount.toJson();
     await docUser.set(json);
 
-    goToAuthenticator() {
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) => const Authenticator(),
-        ),
-      );
-    }
-  }
-
-// register the user
-  Future registerUser() async {
-    try {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: emailcontroller.text.trim(),
-        password: passwordcontroller.text.trim(),
-      );
-      createUser();
-      setState(() {
-        errormessage = "";
-      });
-    } on FirebaseAuthException catch (e) {
-      print(e);
-      setState(() {
-        errormessage = e.message.toString();
-      });
-    }
-  }
-
-  goToAuthenticator() {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => const Authenticator(),
-      ),
-    );
+    setState(() {
+      namecontroller.text = "";
+      emailcontroller.text = "";
+    });
   }
 }

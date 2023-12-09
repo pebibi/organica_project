@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:organica_project/Admin/Add_Data.dart';
-import 'package:organica_project/Admin/register.dart';
+import 'package:organica_project/Admin/Management.dart';
 import 'package:organica_project/Admin/Update_Data_Product.dart';
 import 'package:organica_project/productData.dart';
+import 'package:organica_project/searchtry.dart';
 
 class ProductDetails extends StatefulWidget {
   const ProductDetails({super.key});
@@ -14,10 +15,16 @@ class ProductDetails extends StatefulWidget {
 }
 
 class _ProductDetailsState extends State<ProductDetails> {
+  bool isDark = false;
   final user = FirebaseAuth.instance.currentUser!;
+  TextEditingController searchController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    final ThemeData themeData = ThemeData(
+        useMaterial3: true,
+        brightness: isDark ? Brightness.dark : Brightness.light);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.green.shade400,
@@ -65,6 +72,13 @@ class _ProductDetailsState extends State<ProductDetails> {
   }
 
   Widget _buildProductsList(List<QueryDocumentSnapshot> products) {
+    // Filter products based on the search query
+    List<QueryDocumentSnapshot> filteredProducts = products.where((product) {
+      final String title = product['title'].toString().toLowerCase();
+      final String query = searchController.text.toLowerCase();
+      return title.contains(query);
+    }).toList();
+
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -75,6 +89,12 @@ class _ProductDetailsState extends State<ProductDetails> {
               width: 500,
               height: 80,
               child: TextFormField(
+                controller: searchController,
+                onChanged: (query) {
+                  setState(() {
+                    // Trigger a rebuild when the user types in the search field
+                  });
+                },
                 decoration: InputDecoration(
                   hintText: 'Search...',
                   border: OutlineInputBorder(
@@ -100,7 +120,7 @@ class _ProductDetailsState extends State<ProductDetails> {
             ),
           ),
           const SizedBox(height: 10),
-          for (var product in products)
+          for (var product in filteredProducts)
             _buildProductItem(
               Product.fromJson(product.data() as Map<String, dynamic>),
             ),
@@ -119,7 +139,7 @@ class _ProductDetailsState extends State<ProductDetails> {
               _showProductDescription(product);
             },
             child: Image.asset(
-              '../lib/images/ORGANICA.png', // Replace with the actual image path
+              '../lib/images/ORGANICA.png',
               width: 140,
               height: 140,
               fit: BoxFit.cover,
@@ -227,7 +247,7 @@ class _ProductDetailsState extends State<ProductDetails> {
           onTap: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const Register()),
+              MaterialPageRoute(builder: (context) => const Management_Admin()),
             );
           },
         ),
