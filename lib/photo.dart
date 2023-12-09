@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
-import 'package:file_picker/file_picker.dart';
-import 'dart:io';
 
 class Images extends StatefulWidget {
   const Images({Key? key}) : super(key: key);
