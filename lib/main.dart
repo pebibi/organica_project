@@ -1,5 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:organica_project/Admin/Add_Data.dart';
+import 'package:organica_project/Admin/Product_Details.dart';
 import 'package:organica_project/Admin/login.dart';
 import 'package:organica_project/authenticator.dart';
 
