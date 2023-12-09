@@ -1,8 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:organica_project/Admin/login.dart';
-import 'package:organica_project/authenticator.dart';
-
+import 'package:organica_project/Admin/Add_Data.dart';
+import 'package:organica_project/photo.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -25,7 +24,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const Authenticator(),
+      home: const Images(),
     );
   }
 }
