@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:organica_project/Admin/Product_Details.dart';
+import 'package:organica_project/Customer/Splashscreen.dart';
 import 'package:organica_project/authenticator.dart';
 import 'package:organica_project/firebase_options.dart';
 import 'package:organica_project/search.dart';
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const Authenticator(),
+      home: const Splashscreen_customer(),
     );
   }
 }
