@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:organica_project/Customer/RegisterCustomer.dart';
@@ -10,6 +11,23 @@ class SignIn extends StatefulWidget {
 }
 
 class _SignInState extends State<SignIn> {
+  TextEditingController usernamecontroller = TextEditingController();
+  TextEditingController passwordcontroller = TextEditingController();
+  late String errormessage;
+  late bool isError;
+
+  @override
+  void initState() {
+    errormessage = "This is an error";
+    isError = false;
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,7 +37,7 @@ class _SignInState extends State<SignIn> {
           Container(
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage('../assets/images/login.png'),
+                image: AssetImage('../lib/images/login.png'),
                 fit: BoxFit.cover,
               ),
             ),
@@ -63,8 +81,10 @@ class _SignInState extends State<SignIn> {
                 ),
                 SizedBox(height: 300),
                 TextFormField(
+                  controller: usernamecontroller,
                   decoration: InputDecoration(
                     labelText: 'Email Address',
+                    prefixIcon: Icon(Icons.person),
                     labelStyle: GoogleFonts.raleway(),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(15),
@@ -73,8 +93,10 @@ class _SignInState extends State<SignIn> {
                 ),
                 SizedBox(height: 10),
                 TextFormField(
+                  controller: passwordcontroller,
                   decoration: InputDecoration(
                     labelText: 'Password',
+                    prefixIcon: Icon(Icons.lock),
                     labelStyle: GoogleFonts.raleway(),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(15),
@@ -90,6 +112,10 @@ class _SignInState extends State<SignIn> {
                     child: ElevatedButton(
                       onPressed: () {
                         // Add functionality for registration
+                        checkLogin(
+                          usernamecontroller.text,
+                          passwordcontroller.text,
+                        );
                       },
                       style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(
@@ -125,5 +151,28 @@ class _SignInState extends State<SignIn> {
         ],
       ),
     );
+  }
+
+  Future checkLogin(username, password) async {
+    showDialog(
+      context: context,
+      useRootNavigator: false,
+      barrierDismissible: false,
+      builder: (context) => const Center(
+        child: CircularProgressIndicator(),
+      ),
+    );
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: username,
+        password: password,
+      );
+      setState(() {
+        errormessage = "";
+      });
+    } on FirebaseAuthException catch (e) {
+      print(e);
+      errormessage = e.message.toString();
+    }
   }
 }

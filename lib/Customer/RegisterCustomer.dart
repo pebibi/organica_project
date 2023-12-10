@@ -44,7 +44,7 @@ class _SignUpState extends State<SignUp> {
           Container(
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage('../assets/images/login.png'),
+                image: AssetImage('../lib/images/login.png'),
                 fit: BoxFit.cover,
               ),
             ),
@@ -146,16 +146,10 @@ class _SignUpState extends State<SignUp> {
                             borderRadius: BorderRadius.circular(15),
                           ),
                         ),
-                        validator: (value) {
-                          if (value != passwordController.text) {
-                            return 'Passwords do not match';
-                          }
-                          return null;
-                        },
                       ),
                       SizedBox(height: 10),
                       TextFormField(
-                        controller: passwordController,
+                        controller: confirmpasswordController,
                         obscureText: true,
                         decoration: InputDecoration(
                           labelText: 'Confirm Password',
@@ -180,10 +174,8 @@ class _SignUpState extends State<SignUp> {
                           height: 40,
                           child: ElevatedButton(
                             onPressed: () {
-                              if (_formKey.currentState!.validate()) {
-                                // Form is valid, proceed with user registration
-                                registerUser();
-                              }
+                              // Form is valid, proceed with user registration
+                              registerUser();
                             },
                             style: ElevatedButton.styleFrom(
                               shape: RoundedRectangleBorder(
@@ -275,19 +267,5 @@ class _SignUpState extends State<SignUp> {
         builder: (context) => const AuthenticatorCustomer(),
       ),
     );
-  }
-
-  void main() {
-    runApp(MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Password Form'),
-        ),
-        body: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: SignUp(),
-        ),
-      ),
-    ));
   }
 }

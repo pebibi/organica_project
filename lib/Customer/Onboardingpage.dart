@@ -36,13 +36,13 @@ class _OnboardingPageState extends State<OnboardingPage> {
                 title: 'Welcome to Organica!',
                 description:
                     'Discover the farm-fresh revolution that brings you the freshest organic produce right to your fingertips.',
-                imagePath: '../assets/images/first.png',
+                imagePath: '../lib/images/first.png',
               ),
               OnboardingContent(
                 title: 'Experience Freshness',
                 description:
                     'Organica connects you to the bounty of local farmers. Browse through our selection of fresh, organic products, supporting farmers with every purchase.',
-                imagePath: '../assets/images/second.png',
+                imagePath: '../lib/images/second.png',
               ),
             ],
           ),
