@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:organica_project/Customer/RegisterCustomer.dart';
+import 'package:organica_project/Customer/SignIn.dart';
 
 class OnboardingPage extends StatefulWidget {
   @override
@@ -62,6 +64,10 @@ class _OnboardingPageState extends State<OnboardingPage> {
                   child: ElevatedButton(
                     onPressed: () {
                       // Handle action for Register button
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => SignUp()),
+                      );
                     },
                     child: Text('Register'),
                     style: ElevatedButton.styleFrom(
@@ -84,7 +90,11 @@ class _OnboardingPageState extends State<OnboardingPage> {
                   height: 40,
                   child: ElevatedButton(
                     onPressed: () {
-                      // Handle action for Register button
+                      // Handle action for Login button
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => SignIn()),
+                      );
                     },
                     child: Text('Sign In'),
                     style: ElevatedButton.styleFrom(
