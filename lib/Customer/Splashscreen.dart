@@ -18,10 +18,10 @@ class _Splashscreen_customerState extends State<Splashscreen_customer>
     super.initState();
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
 
-    Future.delayed(Duration(seconds: 5), () {
+    Future.delayed(const Duration(seconds: 5), () {
       Navigator.of(context).pushReplacement(MaterialPageRoute(
         builder: (_) =>
-            OnboardingPage(), //DIRI LOGIN IBUTANG OR SIGN UP BASTA SUNOD NA PAGE SA SPLASH
+            const OnboardingPage(), //DIRI LOGIN IBUTANG OR SIGN UP BASTA SUNOD NA PAGE SA SPLASH
       ));
     });
   }
@@ -37,7 +37,7 @@ class _Splashscreen_customerState extends State<Splashscreen_customer>
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: Colors.white,
         ),
         child: Column(

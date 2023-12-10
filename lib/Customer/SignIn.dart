@@ -35,7 +35,7 @@ class _SignInState extends State<SignIn> {
         fit: StackFit.expand,
         children: [
           Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               image: DecorationImage(
                 image: AssetImage('../lib/images/login.png'),
                 fit: BoxFit.cover,
@@ -49,7 +49,7 @@ class _SignInState extends State<SignIn> {
               onPressed: () {
                 Navigator.pop(context);
               },
-              icon: Icon(Icons.arrow_back),
+              icon: const Icon(Icons.arrow_back),
               color: Colors.white,
             ),
           ),
@@ -57,7 +57,7 @@ class _SignInState extends State<SignIn> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                SizedBox(width: 10),
+                const SizedBox(width: 10),
                 Padding(
                   padding: const EdgeInsets.only(top: 100, left: 5, right: 100),
                   child: Text(
@@ -79,34 +79,34 @@ class _SignInState extends State<SignIn> {
                     ),
                   ),
                 ),
-                SizedBox(height: 300),
+                const SizedBox(height: 300),
                 TextFormField(
                   controller: usernamecontroller,
                   decoration: InputDecoration(
                     labelText: 'Email Address',
-                    prefixIcon: Icon(Icons.person),
+                    prefixIcon: const Icon(Icons.person),
                     labelStyle: GoogleFonts.raleway(),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(15),
                     ),
                   ),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 TextFormField(
                   controller: passwordcontroller,
                   decoration: InputDecoration(
                     labelText: 'Password',
-                    prefixIcon: Icon(Icons.lock),
+                    prefixIcon: const Icon(Icons.lock),
                     labelStyle: GoogleFonts.raleway(),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(15),
                     ),
                   ),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Padding(
                   padding: const EdgeInsets.all(8),
-                  child: Container(
+                  child: SizedBox(
                     width: 150,
                     height: 40,
                     child: ElevatedButton(
@@ -122,11 +122,11 @@ class _SignInState extends State<SignIn> {
                           borderRadius: BorderRadius.circular(30),
                         ),
                       ),
-                      child: Text('Sign In'),
+                      child: const Text('Sign In'),
                     ),
                   ),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -138,10 +138,10 @@ class _SignInState extends State<SignIn> {
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => SignUp()),
+                          MaterialPageRoute(builder: (context) => const SignUp()),
                         );
                       },
-                      child: Text("Register"),
+                      child: const Text("Register"),
                     ),
                   ],
                 ),

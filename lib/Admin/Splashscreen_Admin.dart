@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:organica_project/Admin/login.dart';
 import 'package:organica_project/authenticator.dart';
 
 class Splashscreen_admin extends StatefulWidget {
@@ -19,7 +18,7 @@ class _Splashscreen_adminState extends State<Splashscreen_admin>
     super.initState();
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
 
-    Future.delayed(Duration(seconds: 5), () {
+    Future.delayed(const Duration(seconds: 5), () {
       Navigator.of(context).pushReplacement(MaterialPageRoute(
         builder: (_) =>
             const Authenticator(), //DIRI LOGIN IBUTANG OR SIGN UP BASTA SUNOD NA PAGE SA SPLASH
@@ -38,7 +37,7 @@ class _Splashscreen_adminState extends State<Splashscreen_admin>
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: Colors.white,
         ),
         child: Column(

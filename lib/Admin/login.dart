@@ -14,6 +14,7 @@ class _AdminLoginState extends State<AdminLogin> {
   TextEditingController passwordcontroller = TextEditingController();
   late String errormessage;
   late bool isError;
+  bool passToggle = true;
 
   @override
   void initState() {
@@ -47,11 +48,19 @@ class _AdminLoginState extends State<AdminLogin> {
                 color: Colors.white,
                 border: Border.all(
                   color: const Color.fromARGB(255, 87, 187, 139),
-                  width: 5.0,
+                  width: 1.0,
                 ),
+                boxShadow: [
+                  BoxShadow(
+                    color: const Color.fromARGB(255, 88, 85, 85),
+                    offset: Offset(1.0, 1.0),
+                    blurRadius: 3.0,
+                    spreadRadius: 1.0,
+                  ),
+                ],
               ),
               height: 468,
-              width: 260,
+              width: 300,
               child: Column(
                 children: [
                   Padding(
@@ -82,7 +91,8 @@ class _AdminLoginState extends State<AdminLogin> {
                     child: TextField(
                       controller: usernamecontroller,
                       decoration: InputDecoration(
-                        hintText: 'Username or Email',
+                        hintText: 'Email',
+                        prefixIcon: const Icon(Icons.email),
                         hintStyle: GoogleFonts.raleway(),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20.0),
@@ -90,7 +100,7 @@ class _AdminLoginState extends State<AdminLogin> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 7),
+                  const SizedBox(height: 7),
                   Padding(
                     padding: const EdgeInsets.all(5.0),
                     child: TextField(
@@ -99,6 +109,17 @@ class _AdminLoginState extends State<AdminLogin> {
                           passwordcontroller, // para ma hide ang mga text
                       decoration: InputDecoration(
                         hintText: 'Password',
+                        prefixIcon: const Icon(Icons.lock),
+                        suffix: InkWell(
+                          onTap: () {
+                            setState(() {
+                              passToggle = !passToggle;
+                            });
+                          },
+                          child: Icon(passToggle
+                              ? Icons.visibility
+                              : Icons.visibility_off),
+                        ),
                         hintStyle: GoogleFonts.raleway(),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20.0),
@@ -106,7 +127,7 @@ class _AdminLoginState extends State<AdminLogin> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   SizedBox(
                     height: 40, // Set desired height
                     width: 150,

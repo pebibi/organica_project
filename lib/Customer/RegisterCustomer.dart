@@ -45,7 +45,7 @@ class _SignUpState extends State<SignUp> {
           fit: StackFit.expand,
           children: [
             Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage('../lib/images/login.png'),
                   fit: BoxFit.cover,
@@ -59,7 +59,7 @@ class _SignUpState extends State<SignUp> {
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                icon: Icon(Icons.arrow_back),
+                icon: const Icon(Icons.arrow_back),
                 color: Colors.white,
               ),
             ),
@@ -67,7 +67,7 @@ class _SignUpState extends State<SignUp> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  SizedBox(width: 10),
+                  const SizedBox(width: 10),
                   Padding(
                     padding:
                         const EdgeInsets.only(top: 100, left: 5, right: 220),
@@ -90,7 +90,7 @@ class _SignUpState extends State<SignUp> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 300),
+                  const SizedBox(height: 300),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 15),
                     child: Column(
@@ -102,7 +102,7 @@ class _SignUpState extends State<SignUp> {
                                 controller: fnameController,
                                 decoration: InputDecoration(
                                   labelText: 'First Name',
-                                  prefixIcon: Icon(Icons.person),
+                                  prefixIcon: const Icon(Icons.person),
                                   labelStyle: GoogleFonts.raleway(),
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(15),
@@ -110,13 +110,13 @@ class _SignUpState extends State<SignUp> {
                                 ),
                               ),
                             ),
-                            SizedBox(width: 10),
+                            const SizedBox(width: 10),
                             Expanded(
                               child: TextFormField(
                                 controller: lnameController,
                                 decoration: InputDecoration(
                                   labelText: 'Last Name',
-                                  prefixIcon: Icon(Icons.person),
+                                  prefixIcon: const Icon(Icons.person),
                                   labelStyle: GoogleFonts.raleway(),
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(15),
@@ -126,25 +126,25 @@ class _SignUpState extends State<SignUp> {
                             ),
                           ],
                         ),
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
                         TextFormField(
                           controller: emailController,
                           decoration: InputDecoration(
                             labelText: 'Email Address',
-                            prefixIcon: Icon(Icons.email),
+                            prefixIcon: const Icon(Icons.email),
                             labelStyle: GoogleFonts.raleway(),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(15),
                             ),
                           ),
                         ),
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
                         TextFormField(
                           controller: passwordController,
                           obscureText: passToggle,
                           decoration: InputDecoration(
                             labelText: 'Password',
-                            prefixIcon: Icon(Icons.lock),
+                            prefixIcon: const Icon(Icons.lock),
                             suffix: InkWell(
                               onTap: () {
                                 setState(() {
@@ -161,13 +161,23 @@ class _SignUpState extends State<SignUp> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
                         TextFormField(
                           controller: confirmpasswordController,
                           obscureText: true,
                           decoration: InputDecoration(
                             labelText: 'Confirm Password',
-                            prefixIcon: Icon(Icons.lock),
+                            prefixIcon: const Icon(Icons.lock),
+                            suffix: InkWell(
+                              onTap: () {
+                                setState(() {
+                                  passToggle = !passToggle;
+                                });
+                              },
+                              child: Icon(passToggle
+                                  ? Icons.visibility
+                                  : Icons.visibility_off),
+                            ),
                             labelStyle: GoogleFonts.raleway(),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(15),
@@ -180,7 +190,7 @@ class _SignUpState extends State<SignUp> {
                             return null;
                           },
                         ),
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         ElevatedButton(
                           onPressed: () {
                             if (_formKey.currentState!.validate()) {
@@ -188,12 +198,12 @@ class _SignUpState extends State<SignUp> {
                             }
                           },
                           style: ElevatedButton.styleFrom(
-                            primary: Colors.indigo,
+                            backgroundColor: Colors.indigo,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(5),
                             ),
                           ),
-                          child: Container(
+                          child: const SizedBox(
                             height: 50,
                             width: double.infinity,
                             child: Center(
@@ -208,7 +218,7 @@ class _SignUpState extends State<SignUp> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -221,10 +231,10 @@ class _SignUpState extends State<SignUp> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => SignIn()),
+                                      builder: (context) => const SignIn()),
                                 );
                               },
-                              child: Text("Sign In"),
+                              child: const Text("Sign In"),
                             ),
                           ],
                         ),

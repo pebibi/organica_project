@@ -1,9 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:organica_project/Admin/Product_Details.dart';
-import 'package:organica_project/Customer/Onboardingpage.dart';
 import 'package:organica_project/Customer/SignIn.dart';
-import 'package:organica_project/Customer/Splashscreen.dart';
 
 class AuthenticatorCustomer extends StatefulWidget {
   const AuthenticatorCustomer({super.key});
@@ -28,7 +26,7 @@ class _AuthenticatorCustomerState extends State<AuthenticatorCustomer> {
               child: Text('Something Went Wrong!'),
             );
           } else if (snapshot.hasData) {
-            return ProductDetails();
+            return const ProductDetails();
           } else {
             return const SignIn();
           }

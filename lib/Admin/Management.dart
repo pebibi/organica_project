@@ -12,10 +12,10 @@ class Management_Admin extends StatefulWidget {
 class _Management_AdminState extends State<Management_Admin> {
   int _listofProducts =
       0; // Default value, will be updated with the actual count
-  int _newOrders = 0;
-  int _processOrders = 0;
-  int _Deliver = 0;
-  int _Cancelled = 0;
+  final int _newOrders = 0;
+  final int _processOrders = 0;
+  final int _Deliver = 0;
+  final int _Cancelled = 0;
 
   @override
   void initState() {

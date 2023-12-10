@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:organica_project/Customer/RegisterCustomer.dart';
-import 'package:organica_project/Customer/SignIn.dart';
 import 'package:organica_project/authenticatorCustomer.dart';
 
 class OnboardingPage extends StatefulWidget {
+  const OnboardingPage({super.key});
+
   @override
   _OnboardingPageState createState() => _OnboardingPageState();
 }
@@ -59,7 +60,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Container(
+                SizedBox(
                   width: 350,
                   height: 40,
                   child: ElevatedButton(
@@ -67,15 +68,15 @@ class _OnboardingPageState extends State<OnboardingPage> {
                       // Handle action for Register button
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => SignUp()),
+                        MaterialPageRoute(builder: (context) => const SignUp()),
                       );
                     },
-                    child: Text('Register'),
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30.0),
                       ),
                     ),
+                    child: const Text('Register'),
                   ),
                 ),
               ],
@@ -86,7 +87,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Container(
+                SizedBox(
                   width: 350,
                   height: 40,
                   child: ElevatedButton(
@@ -95,15 +96,15 @@ class _OnboardingPageState extends State<OnboardingPage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => AuthenticatorCustomer()),
+                            builder: (context) => const AuthenticatorCustomer()),
                       );
                     },
-                    child: Text('Sign In'),
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30.0),
                       ),
                     ),
+                    child: const Text('Sign In'),
                   ),
                 ),
               ],
@@ -124,13 +125,13 @@ class _OnboardingPageState extends State<OnboardingPage> {
 
   Widget _indicator(bool isActive) {
     return AnimatedContainer(
-      duration: Duration(milliseconds: 300),
-      margin: EdgeInsets.symmetric(horizontal: 8.0),
+      duration: const Duration(milliseconds: 300),
+      margin: const EdgeInsets.symmetric(horizontal: 8.0),
       height: 10.0,
       width: isActive ? 20.0 : 10.0,
       decoration: BoxDecoration(
         color: isActive ? Colors.green : Colors.grey,
-        borderRadius: BorderRadius.all(Radius.circular(12)),
+        borderRadius: const BorderRadius.all(Radius.circular(12)),
       ),
     );
   }
@@ -141,7 +142,7 @@ class OnboardingContent extends StatelessWidget {
   final String description;
   final String imagePath;
 
-  const OnboardingContent({
+  const OnboardingContent({super.key, 
     required this.title,
     required this.description,
     required this.imagePath,
@@ -152,18 +153,18 @@ class OnboardingContent extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        SizedBox(height: 50),
+        const SizedBox(height: 50),
         Image.asset(
           imagePath,
           width: 600,
           height: 500,
           fit: BoxFit.contain,
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Text(title,
             style:
                 GoogleFonts.raleway(fontSize: 32, fontWeight: FontWeight.bold)),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 40),
           child: Text(description,
