@@ -5,7 +5,6 @@ import 'package:organica_project/Admin/Add_Data.dart';
 import 'package:organica_project/Admin/Management.dart';
 import 'package:organica_project/Admin/Update_Data_Product.dart';
 import 'package:organica_project/productData.dart';
-import 'package:organica_project/searchtry.dart';
 
 class ProductDetails extends StatefulWidget {
   const ProductDetails({super.key});

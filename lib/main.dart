@@ -1,11 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:organica_project/Admin/Product_Details.dart';
+import 'package:organica_project/Admin/Splashscreen_Admin.dart';
 import 'package:organica_project/Customer/Splashscreen.dart';
 import 'package:organica_project/authenticator.dart';
 import 'package:organica_project/firebase_options.dart';
-import 'package:organica_project/search.dart';
-import 'package:organica_project/searchtry.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,7 +27,8 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const Splashscreen_customer(),
+      //either splashscreen_admin or splashscreen_customer tawagon here ha kasabot pebe junami
+      home: const Splashscreen_admin(),
     );
   }
 }

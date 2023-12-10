@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:organica_project/Customer/RegisterCustomer.dart';
 import 'package:organica_project/Customer/SignIn.dart';
+import 'package:organica_project/authenticatorCustomer.dart';
 
 class OnboardingPage extends StatefulWidget {
   @override
@@ -93,7 +94,8 @@ class _OnboardingPageState extends State<OnboardingPage> {
                       // Handle action for Login button
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => SignIn()),
+                        MaterialPageRoute(
+                            builder: (context) => AuthenticatorCustomer()),
                       );
                     },
                     child: Text('Sign In'),

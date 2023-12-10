@@ -1,14 +1,15 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
-class Login extends StatefulWidget {
-  const Login({super.key});
+class AdminLogin extends StatefulWidget {
+  const AdminLogin({Key? key}) : super(key: key);
 
   @override
-  State<Login> createState() => _LoginState();
+  State<AdminLogin> createState() => _AdminLoginState();
 }
 
-class _LoginState extends State<Login> {
+class _AdminLoginState extends State<AdminLogin> {
   TextEditingController usernamecontroller = TextEditingController();
   TextEditingController passwordcontroller = TextEditingController();
   late String errormessage;
@@ -29,58 +30,116 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Container(
-          margin: const EdgeInsets.symmetric(horizontal: 25),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'SIGN IN',
-                style: txtstyle,
+      body: Stack(
+        children: [
+          Container(
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('../lib/images/Admin_Loginbg.png'),
+                fit: BoxFit.cover,
               ),
-              const SizedBox(height: 15),
-              TextField(
-                controller: usernamecontroller,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Enter Username',
-                  prefixIcon: Icon(Icons.person),
-                ),
-              ),
-              const SizedBox(height: 15),
-              TextField(
-                obscureText: true,
-                controller: passwordcontroller,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Enter Password',
-                  prefixIcon: Icon(Icons.lock),
-                ),
-              ),
-              const SizedBox(height: 15),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  minimumSize: const Size.fromHeight(50),
-                ),
-                onPressed: () {
-                  checkLogin(
-                    usernamecontroller.text,
-                    passwordcontroller.text,
-                  );
-                },
-                child: const Text('LOGIN'),
-              ),
-              const SizedBox(height: 15),
-              (isError)
-                  ? Text(
-                      errormessage,
-                      style: errortxtstyle,
-                    )
-                  : Container(),
-            ],
+            ),
           ),
-        ),
+          Center(
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: Colors.white,
+                border: Border.all(
+                  color: const Color.fromARGB(255, 87, 187, 139),
+                  width: 5.0,
+                ),
+              ),
+              height: 468,
+              width: 260,
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 70, right: 60),
+                    child: Text(
+                      'Welcome back!',
+                      style: GoogleFonts.raleway(
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        top: 5, bottom: 15, right: 40, left: 5),
+                    child: Text(
+                      'Please login to your admin account',
+                      style: GoogleFonts.raleway(
+                        fontSize: 12,
+                        fontWeight: FontWeight.normal,
+                        color: Colors.black87,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextField(
+                      controller: usernamecontroller,
+                      decoration: InputDecoration(
+                        hintText: 'Username or Email',
+                        hintStyle: GoogleFonts.raleway(),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 7),
+                  Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: TextField(
+                      obscureText: true,
+                      controller:
+                          passwordcontroller, // para ma hide ang mga text
+                      decoration: InputDecoration(
+                        hintText: 'Password',
+                        hintStyle: GoogleFonts.raleway(),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  SizedBox(
+                    height: 40, // Set desired height
+                    width: 150,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        checkLogin(
+                          usernamecontroller.text,
+                          passwordcontroller.text,
+                        );
+                        // Handle login button press function here
+                      },
+                      style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                      ),
+                      child: Text(
+                        'Login',
+                        style: GoogleFonts.raleway(fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
+                  (isError)
+                      ? Text(
+                          errormessage,
+                          style: errortxtstyle,
+                        )
+                      : Container(),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -99,13 +158,12 @@ class _LoginState extends State<Login> {
 
   Future checkLogin(username, password) async {
     showDialog(
-      context: context,
-      useRootNavigator: false,
-      barrierDismissible: false,
-      builder: (context) => const Center(
-        child: CircularProgressIndicator(),
-      ),
-    );
+        context: context,
+        useRootNavigator: false,
+        barrierDismissible: false,
+        builder: (context) => const Center(
+              child: CircularProgressIndicator(),
+            ));
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: username,
@@ -116,7 +174,10 @@ class _LoginState extends State<Login> {
       });
     } on FirebaseAuthException catch (e) {
       print(e);
-      errormessage = e.message.toString();
+      setState(() {
+        errormessage = e.message.toString();
+      });
     }
+    Navigator.pop(context);
   }
 }

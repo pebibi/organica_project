@@ -14,6 +14,7 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextEditingController fnameController = TextEditingController();
   TextEditingController lnameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
@@ -21,7 +22,7 @@ class _SignUpState extends State<SignUp> {
   TextEditingController confirmpasswordController = TextEditingController();
   late String errormessage;
   late bool isError;
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  bool passToggle = true;
 
   @override
   void initState() {
@@ -38,187 +39,208 @@ class _SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        fit: StackFit.expand,
-        children: [
-          Container(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('../lib/images/login.png'),
-                fit: BoxFit.cover,
+      body: Form(
+        key: _formKey,
+        child: Stack(
+          fit: StackFit.expand,
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('../lib/images/login.png'),
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
-          ),
-          Positioned(
-            top: 40,
-            left: 10,
-            child: IconButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              icon: Icon(Icons.arrow_back),
-              color: Colors.white,
+            Positioned(
+              top: 40,
+              left: 10,
+              child: IconButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                icon: Icon(Icons.arrow_back),
+                color: Colors.white,
+              ),
             ),
-          ),
-          Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                SizedBox(width: 10),
-                Padding(
-                  padding: const EdgeInsets.only(top: 100, left: 5, right: 220),
-                  child: Text(
-                    'Sign Up',
-                    style: GoogleFonts.raleway(
-                      fontSize: 40,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
+            Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(width: 10),
+                  Padding(
+                    padding:
+                        const EdgeInsets.only(top: 100, left: 5, right: 220),
+                    child: Text(
+                      'Sign Up',
+                      style: GoogleFonts.raleway(
+                        fontSize: 40,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 5, left: 5, right: 100),
-                  child: Text(
-                    'Go Green, Live Green',
-                    style: GoogleFonts.raleway(
-                      fontSize: 26,
-                      color: Colors.white,
+                  Padding(
+                    padding: const EdgeInsets.only(top: 5, left: 5, right: 100),
+                    child: Text(
+                      'Go Green, Live Green',
+                      style: GoogleFonts.raleway(
+                        fontSize: 26,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
-                ),
-                SizedBox(height: 300),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          Expanded(
-                            child: TextFormField(
-                              controller: fnameController,
-                              decoration: InputDecoration(
-                                labelText: 'First Name',
-                                prefixIcon: Icon(Icons.person),
-                                labelStyle: GoogleFonts.raleway(),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(15),
+                  SizedBox(height: 300),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            Expanded(
+                              child: TextFormField(
+                                controller: fnameController,
+                                decoration: InputDecoration(
+                                  labelText: 'First Name',
+                                  prefixIcon: Icon(Icons.person),
+                                  labelStyle: GoogleFonts.raleway(),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(15),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(width: 10),
+                            Expanded(
+                              child: TextFormField(
+                                controller: lnameController,
+                                decoration: InputDecoration(
+                                  labelText: 'Last Name',
+                                  prefixIcon: Icon(Icons.person),
+                                  labelStyle: GoogleFonts.raleway(),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(15),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 10),
+                        TextFormField(
+                          controller: emailController,
+                          decoration: InputDecoration(
+                            labelText: 'Email Address',
+                            prefixIcon: Icon(Icons.email),
+                            labelStyle: GoogleFonts.raleway(),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        TextFormField(
+                          controller: passwordController,
+                          obscureText: passToggle,
+                          decoration: InputDecoration(
+                            labelText: 'Password',
+                            prefixIcon: Icon(Icons.lock),
+                            suffix: InkWell(
+                              onTap: () {
+                                setState(() {
+                                  passToggle = !passToggle;
+                                });
+                              },
+                              child: Icon(passToggle
+                                  ? Icons.visibility
+                                  : Icons.visibility_off),
+                            ),
+                            labelStyle: GoogleFonts.raleway(),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        TextFormField(
+                          controller: confirmpasswordController,
+                          obscureText: true,
+                          decoration: InputDecoration(
+                            labelText: 'Confirm Password',
+                            prefixIcon: Icon(Icons.lock),
+                            labelStyle: GoogleFonts.raleway(),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                          ),
+                          validator: (value) {
+                            if (value != passwordController.text) {
+                              return 'Passwords do not match';
+                            }
+                            return null;
+                          },
+                        ),
+                        SizedBox(height: 20),
+                        ElevatedButton(
+                          onPressed: () {
+                            if (_formKey.currentState!.validate()) {
+                              registerUserCustomer();
+                            }
+                          },
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.indigo,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                          ),
+                          child: Container(
+                            height: 50,
+                            width: double.infinity,
+                            child: Center(
+                              child: Text(
+                                "Register",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
                                 ),
                               ),
                             ),
                           ),
-                          SizedBox(width: 10),
-                          Expanded(
-                            child: TextFormField(
-                              controller: lnameController,
-                              decoration: InputDecoration(
-                                labelText: 'Last Name',
-                                prefixIcon: Icon(Icons.person),
-                                labelStyle: GoogleFonts.raleway(),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(15),
-                                ),
-                              ),
+                        ),
+                        SizedBox(height: 10),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Already have an account?",
+                              style: GoogleFonts.raleway(),
                             ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 10),
-                      TextFormField(
-                        controller: emailController,
-                        decoration: InputDecoration(
-                          labelText: 'Email Address',
-                          prefixIcon: Icon(Icons.email),
-                          labelStyle: GoogleFonts.raleway(),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 10),
-                      TextFormField(
-                        controller: passwordController,
-                        obscureText: true,
-                        decoration: InputDecoration(
-                          labelText: 'Password',
-                          prefixIcon: Icon(Icons.lock),
-                          labelStyle: GoogleFonts.raleway(),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 10),
-                      TextFormField(
-                        controller: confirmpasswordController,
-                        obscureText: true,
-                        decoration: InputDecoration(
-                          labelText: 'Confirm Password',
-                          prefixIcon: Icon(Icons.lock),
-                          labelStyle: GoogleFonts.raleway(),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                        ),
-                        validator: (value) {
-                          if (value != passwordController.text) {
-                            return 'Passwords do not match';
-                          }
-                          return null;
-                        },
-                      ),
-                      SizedBox(height: 20),
-                      Padding(
-                        padding: const EdgeInsets.all(8),
-                        child: Container(
-                          width: 150,
-                          height: 40,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              // Form is valid, proceed with user registration
-                              registerUser();
-                            },
-                            style: ElevatedButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30),
-                              ),
+                            TextButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => SignIn()),
+                                );
+                              },
+                              child: Text("Sign In"),
                             ),
-                            child: Text('Register'),
-                          ),
+                          ],
                         ),
-                      ),
-                      SizedBox(height: 10),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "Already have an account?",
-                            style: GoogleFonts.raleway(),
-                          ),
-                          TextButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => SignIn()),
-                              );
-                            },
-                            child: Text("Sign In"),
-                          ),
-                        ],
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
 
-  // call the current user submethod to get the currently registered user
-  Future createUser() async {
+  Future createUserCustomer() async {
     final user = FirebaseAuth.instance.currentUser!;
     final userid = user.uid;
     final docUser =
@@ -242,14 +264,13 @@ class _SignUpState extends State<SignUp> {
     }
   }
 
-  // register the user
-  Future registerUser() async {
+  Future registerUserCustomer() async {
     try {
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: emailController.text.trim(),
         password: passwordController.text.trim(),
       );
-      createUser();
+      createUserCustomer();
       setState(() {
         errormessage = "";
       });
