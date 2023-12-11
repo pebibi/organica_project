@@ -50,9 +50,9 @@ class _AdminLoginState extends State<AdminLogin> {
                   color: const Color.fromARGB(255, 87, 187, 139),
                   width: 1.0,
                 ),
-                boxShadow: [
+                boxShadow: const [
                   BoxShadow(
-                    color: const Color.fromARGB(255, 88, 85, 85),
+                    color: Color.fromARGB(255, 88, 85, 85),
                     offset: Offset(1.0, 1.0),
                     blurRadius: 3.0,
                     spreadRadius: 1.0,

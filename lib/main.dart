@@ -1,11 +1,7 @@
-import 'dart:io';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:organica_project/Admin/Splashscreen_Admin.dart';
 import 'package:organica_project/Admin/login.dart';
-import 'package:organica_project/Customer/RegisterCustomer.dart';
-import 'package:organica_project/Customer/Splashscreen.dart';
 import 'package:organica_project/firebase_options.dart';
 
 void main() async {
