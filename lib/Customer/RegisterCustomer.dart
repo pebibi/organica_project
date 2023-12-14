@@ -18,11 +18,13 @@ class _SignUpState extends State<SignUp> {
   TextEditingController fnameController = TextEditingController();
   TextEditingController lnameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
+  TextEditingController homeAddressController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmpasswordController = TextEditingController();
   late String errormessage;
   late bool isError;
   bool passToggle = true;
+  bool passToggleConfirm = true;
 
   @override
   void initState() {
@@ -90,7 +92,7 @@ class _SignUpState extends State<SignUp> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 300),
+                  const SizedBox(height: 200),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 15),
                     child: Column(
@@ -140,6 +142,18 @@ class _SignUpState extends State<SignUp> {
                         ),
                         const SizedBox(height: 10),
                         TextFormField(
+                          controller: homeAddressController,
+                          decoration: InputDecoration(
+                            labelText: 'Home Address',
+                            prefixIcon: const Icon(Icons.email),
+                            labelStyle: GoogleFonts.raleway(),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        TextFormField(
                           controller: passwordController,
                           obscureText: passToggle,
                           decoration: InputDecoration(
@@ -171,10 +185,10 @@ class _SignUpState extends State<SignUp> {
                             suffix: InkWell(
                               onTap: () {
                                 setState(() {
-                                  passToggle = !passToggle;
+                                  passToggleConfirm = !passToggleConfirm;
                                 });
                               },
-                              child: Icon(passToggle
+                              child: Icon(passToggleConfirm
                                   ? Icons.visibility
                                   : Icons.visibility_off),
                             ),
@@ -198,7 +212,8 @@ class _SignUpState extends State<SignUp> {
                             }
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.indigo,
+                            backgroundColor:
+                                const Color.fromARGB(255, 7, 131, 40),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(5),
                             ),
@@ -261,6 +276,7 @@ class _SignUpState extends State<SignUp> {
       fname: fnameController.text,
       lname: lnameController.text,
       email: emailController.text,
+      address: homeAddressController.text,
     );
     final json = customerAccount.toJson();
     await docUser.set(json);

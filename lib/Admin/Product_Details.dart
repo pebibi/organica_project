@@ -20,10 +20,6 @@ class _ProductDetailsState extends State<ProductDetails> {
 
   @override
   Widget build(BuildContext context) {
-    final ThemeData themeData = ThemeData(
-        useMaterial3: true,
-        brightness: isDark ? Brightness.dark : Brightness.light);
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.green.shade400,
@@ -39,7 +35,6 @@ class _ProductDetailsState extends State<ProductDetails> {
             if (snapshot.hasError) {
               return Text('Something went wrong! ${snapshot.error}');
             } else if (snapshot.hasData && snapshot.data!.exists) {
-              // Access user data
               final userData = snapshot.data!.data() as Map<String, dynamic>;
               final name = userData['name'] ?? 'Username not found';
               final email = userData['email'] ?? 'admin@example.com';
@@ -71,7 +66,6 @@ class _ProductDetailsState extends State<ProductDetails> {
   }
 
   Widget _buildProductsList(List<QueryDocumentSnapshot> products) {
-    // Filter products based on the search query
     List<QueryDocumentSnapshot> filteredProducts = products.where((product) {
       final String title = product['title'].toString().toLowerCase();
       final String query = searchController.text.toLowerCase();
@@ -90,9 +84,7 @@ class _ProductDetailsState extends State<ProductDetails> {
               child: TextFormField(
                 controller: searchController,
                 onChanged: (query) {
-                  setState(() {
-                    // Trigger a rebuild when the user types in the search field
-                  });
+                  setState(() {});
                 },
                 decoration: InputDecoration(
                   hintText: 'Search...',
@@ -119,10 +111,22 @@ class _ProductDetailsState extends State<ProductDetails> {
             ),
           ),
           const SizedBox(height: 10),
-          for (var product in filteredProducts)
-            _buildProductItem(
-              Product.fromJson(product.data() as Map<String, dynamic>),
+          GridView.builder(
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              mainAxisSpacing: 10.0,
+              crossAxisSpacing: 10.0,
             ),
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: filteredProducts.length,
+            itemBuilder: (BuildContext context, int index) {
+              return _buildProductItem(
+                Product.fromJson(
+                    filteredProducts[index].data() as Map<String, dynamic>),
+              );
+            },
+          ),
         ],
       ),
     );
@@ -137,11 +141,20 @@ class _ProductDetailsState extends State<ProductDetails> {
             onTap: () {
               _showProductDescription(product);
             },
-            child: Image.asset(
-              '../lib/images/ORGANICA.png',
-              width: 140,
-              height: 140,
-              fit: BoxFit.cover,
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(
+                  color: Colors.black, // You can change the border color here
+                  width: 1.0, // You can adjust the border width as needed
+                ),
+              ),
+              child: Image.asset(
+                '../lib/images/LogoO.png',
+                width: 140,
+                height: 140,
+                fit: BoxFit.cover,
+              ),
             ),
           ),
         ),

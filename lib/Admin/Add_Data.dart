@@ -68,7 +68,7 @@ class _AddProductState extends State<AddProduct> {
                 borderRadius: BorderRadius.circular(0),
               ),
               child: Image.asset(
-                '../lib/images/ORGANICA.png',
+                '../lib/images/LogoO.png',
                 fit: BoxFit.cover,
               ),
             ),

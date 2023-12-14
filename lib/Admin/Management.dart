@@ -68,7 +68,7 @@ class _Management_AdminState extends State<Management_Admin> {
               const SizedBox(height: 20),
               // List of products section
               _buildOrderSection(
-                title: 'List of Products',
+                title: 'Number of Products',
                 count: _listofProducts,
                 icon: Icons.list,
               ),
