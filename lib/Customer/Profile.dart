@@ -24,15 +24,32 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Container(
-            width: 500,
-            height: 300,
-            decoration: const BoxDecoration(
-              color: Colors.green,
-            ),
+      body: StreamBuilder<DocumentSnapshot>(
+        stream: _profileStream,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          }
+
+          if (snapshot.hasError) {
+            return Center(child: Text('Error: ${snapshot.error}'));
+          }
+
+          if (!snapshot.hasData || !snapshot.data!.exists) {
+            return Center(child: Text('User data not found'));
+          }
+
+          final userData = snapshot.data!.data() as Map<String, dynamic>;
+
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Container(
+                width: 500,
+                height: 300,
+                decoration: const BoxDecoration(
+                  color: Colors.green,
+                ),
             child: Stack(
               children: [
                 Align(

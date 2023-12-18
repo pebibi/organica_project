@@ -76,8 +76,6 @@ class _ProductPageState extends State<ProductPage> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const SizedBox(height: 20),
-            // Rest of the widget remains unchanged...
           ],
         ),
       ),
