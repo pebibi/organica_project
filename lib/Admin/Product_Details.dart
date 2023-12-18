@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:organica_project/Admin/Add_Data.dart';
 import 'package:organica_project/Admin/Management.dart';
 import 'package:organica_project/Admin/Update_Data_Product.dart';
@@ -14,7 +15,6 @@ class ProductDetails extends StatefulWidget {
 }
 
 class _ProductDetailsState extends State<ProductDetails> {
-  bool isDark = false;
   final user = FirebaseAuth.instance.currentUser!;
   TextEditingController searchController = TextEditingController();
 
@@ -33,7 +33,12 @@ class _ProductDetailsState extends State<ProductDetails> {
               .snapshots(),
           builder: (context, snapshot) {
             if (snapshot.hasError) {
-              return Text('Something went wrong! ${snapshot.error}');
+              return Text(
+                'Something went wrong! ${snapshot.error}',
+                style: TextStyle(
+                    color:
+                        Color.fromARGB(189, 255, 0, 0)), // Set the color here
+              );
             } else if (snapshot.hasData && snapshot.data!.exists) {
               final userData = snapshot.data!.data() as Map<String, dynamic>;
               final name = userData['name'] ?? 'Username not found';
@@ -51,7 +56,10 @@ class _ProductDetailsState extends State<ProductDetails> {
         stream: FirebaseFirestore.instance.collection('product').snapshots(),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
-            return Text('Something went wrong! ${snapshot.error}');
+            return Text(
+              'Something went wrong! ${snapshot.error}',
+              style: TextStyle(color: Color.fromARGB(189, 255, 0, 0)),
+            );
           } else if (snapshot.hasData) {
             final products = snapshot.data!.docs;
             return _buildProductsList(products);
@@ -80,7 +88,7 @@ class _ProductDetailsState extends State<ProductDetails> {
             padding: const EdgeInsets.all(15.0),
             child: SizedBox(
               width: 500,
-              height: 80,
+              height: 90,
               child: TextFormField(
                 controller: searchController,
                 onChanged: (query) {
@@ -88,8 +96,13 @@ class _ProductDetailsState extends State<ProductDetails> {
                 },
                 decoration: InputDecoration(
                   hintText: 'Search...',
+                  hintStyle: GoogleFonts.raleway(
+                    color: Colors.grey,
+                    fontSize: 20,
+                    fontWeight: FontWeight.w300,
+                  ),
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
+                    borderRadius: BorderRadius.circular(10),
                   ),
                   prefixIcon: const Icon(Icons.search),
                 ),
@@ -98,12 +111,12 @@ class _ProductDetailsState extends State<ProductDetails> {
           ),
           const SizedBox(height: 10),
           Padding(
-            padding: const EdgeInsets.only(right: 250, bottom: 30),
+            padding: const EdgeInsets.only(right: 200, bottom: 30),
             child: Container(
-              child: const Text(
+              child: Text(
                 'Products :',
                 textAlign: TextAlign.left,
-                style: TextStyle(
+                style: GoogleFonts.raleway(
                   fontSize: 32,
                   fontWeight: FontWeight.bold,
                 ),
@@ -142,11 +155,12 @@ class _ProductDetailsState extends State<ProductDetails> {
               _showProductDescription(product);
             },
             child: Container(
+              height: 150,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
                 border: Border.all(
-                  color: Colors.black, // You can change the border color here
-                  width: 1.0, // You can adjust the border width as needed
+                  color: Colors.black,
+                  width: 1.0,
                 ),
               ),
               child: Image.asset(

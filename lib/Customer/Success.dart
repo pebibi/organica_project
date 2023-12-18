@@ -48,7 +48,7 @@ class _SuccessPageState extends State<SuccessPage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const Dashboard(),
+                          builder: (context) => const DashboardCustomer(),
                         ),
                       );
                     },

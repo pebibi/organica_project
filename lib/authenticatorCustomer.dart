@@ -26,7 +26,7 @@ class _AuthenticatorCustomerState extends State<AuthenticatorCustomer> {
               child: Text('Something Went Wrong!'),
             );
           } else if (snapshot.hasData) {
-            return const Dashboard();
+            return const DashboardCustomer();
           } else {
             return const SignIn();
           }

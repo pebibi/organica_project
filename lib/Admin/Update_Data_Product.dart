@@ -41,10 +41,10 @@ class _UpdateProductState extends State<UpdateProduct> {
     priceController.text = widget.product.price.toString();
     quantityController.text = widget.product.quantity.toString();
     descriptionController.text = widget.product.description;
-    supplierNameController.text = widget.product.supplierName;
-    supplierAddressController.text = widget.product.supplierAddress;
-    selectedCategory = widget.product.category;
-    selectedAvailability = widget.product.available;
+    supplierNameController.text = widget.product.supplierName!;
+    supplierAddressController.text = widget.product.supplierAddress!;
+    selectedCategory = widget.product.category!;
+    selectedAvailability = widget.product.available!;
   }
 
   @override
@@ -82,77 +82,113 @@ class _UpdateProductState extends State<UpdateProduct> {
                 borderRadius: BorderRadius.circular(0),
               ),
               child: Image.asset(
-                '../lib/images/ORGANICA.png',
+                '../lib/images/LogoO.png',
                 width: 350,
                 height: 200,
                 fit: BoxFit.cover,
               ),
             ),
-            SizedBox(
+            Container(
               width: 350,
-              child: Column(
-                children: [
-                  const SizedBox(height: 15),
-                  Container(
-                    child: DropdownButton<String>(
-                      value: selectedCategory,
-                      onChanged: (String? newValue) {
-                        setState(() {
-                          selectedCategory = newValue!;
-                        });
-                      },
-                      items: categories
-                          .map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
-                    ),
-                  ),
-                  const SizedBox(height: 15),
-                  Container(
-                    child: DropdownButton<String>(
-                      value: selectedAvailability,
-                      onChanged: (String? newValue) {
-                        setState(() {
-                          selectedAvailability = newValue!;
-                        });
-                      },
-                      items: availabilities
-                          .map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  buildTextField(titleController, 'Product Name'),
-                  const SizedBox(height: 20),
-                  buildTextField(priceController, 'Product Price'),
-                  const SizedBox(height: 20),
-                  buildTextField(quantityController, 'Product Quantity'),
-                  const SizedBox(height: 20),
-                  buildTextField(supplierNameController, 'Supplier Name'),
-                  const SizedBox(height: 20),
-                  buildTextField(supplierAddressController, 'Supplier Address'),
-                  const SizedBox(height: 20),
-                  buildTextField(descriptionController, 'Product Description'),
-                  const SizedBox(height: 20),
-                  Row(
-                    children: [
-                      buildElevatedButton('UPDATE', updateProduct),
-                      buildElevatedButton('DELETE', deleteProduct),
-                    ],
-                  ),
-                  const SizedBox(height: 20),
-                ],
+              height: 200,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(0),
               ),
+              child: Image.asset(
+                '../lib/images/LogoO.png',
+                fit: BoxFit.cover,
+              ),
+            ),
+            Column(
+              children: [
+                const SizedBox(height: 15),
+                buildDropdownButton(
+                  'Category',
+                  categories,
+                  selectedCategory,
+                  (String? newValue) {
+                    setState(() {
+                      selectedCategory = newValue!;
+                    });
+                  },
+                ),
+                const SizedBox(height: 15),
+                buildDropdownButton(
+                  'Availability',
+                  availabilities,
+                  selectedAvailability,
+                  (String? newValue) {
+                    setState(() {
+                      selectedAvailability = newValue!;
+                    });
+                  },
+                ),
+                const SizedBox(height: 20),
+                buildTextField(titleController, 'Product Name'),
+                const SizedBox(height: 20),
+                buildTextField(priceController, 'Product Price'),
+                const SizedBox(height: 20),
+                buildTextField(quantityController, 'Product Quantity'),
+                const SizedBox(height: 20),
+                buildTextField(supplierNameController, 'Supplier Name'),
+                const SizedBox(height: 20),
+                buildTextField(supplierAddressController, 'Supplier Address'),
+                const SizedBox(height: 20),
+                buildTextField(descriptionController, 'Product Description'),
+                const SizedBox(height: 20),
+                Row(
+                  children: [
+                    Expanded(
+                      child: buildElevatedButton('UPDATE', updateProduct),
+                    ),
+                    const SizedBox(width: 16),
+                    Expanded(
+                      child: buildElevatedButton('DELETE', deleteProduct),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 20),
+              ],
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget buildDropdownButton(
+    String labelText,
+    List<String> items,
+    String selectedValue,
+    ValueChanged<String?> onChanged,
+  ) {
+    return Container(
+      width: 350, // Set the desired width
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: Color.fromARGB(255, 0, 0, 0),
+          width: 1.0,
+        ),
+        borderRadius: BorderRadius.circular(15.0),
+      ),
+      child: DropdownButton<String>(
+        hint: const Text('Select Category'),
+        value: selectedValue,
+        onChanged: onChanged,
+        style: GoogleFonts.raleway(
+          color: Colors.black,
+          fontSize: 16.0,
+        ),
+        items: items.map<DropdownMenuItem<String>>((String value) {
+          return DropdownMenuItem<String>(
+            value: value,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(value),
+            ),
+          );
+        }).toList(),
       ),
     );
   }
@@ -176,18 +212,22 @@ class _UpdateProductState extends State<UpdateProduct> {
 
   Widget buildElevatedButton(String text, VoidCallback onPressed) {
     return SizedBox(
-      width: 150,
+      width: 75,
       height: 40,
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
+          primary: Colors.green,
+          onPrimary: Colors.white,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30),
+            borderRadius: BorderRadius.circular(15),
           ),
         ),
         child: Text(
           text,
-          style: GoogleFonts.raleway(fontWeight: FontWeight.bold),
+          style: GoogleFonts.raleway(
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ),
     );
@@ -235,11 +275,9 @@ class _UpdateProductState extends State<UpdateProduct> {
         errorMessage = '';
       });
 
-      // Clear text fields and navigate back
       clearTextFields();
       Navigator.pop(context);
     } catch (error) {
-      // Handle errors and update error message
       setState(() {
         isError = true;
         errorMessage = 'Error: $error';

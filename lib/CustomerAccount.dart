@@ -3,12 +3,16 @@ class CustomerAccount {
   final String fname;
   final String lname;
   final String email;
+  final String? phoneNumber;
+  final String? address;
 
   CustomerAccount({
     required this.id,
     required this.fname,
     required this.lname,
     required this.email,
+    this.phoneNumber,
+    this.address,
   });
 
   static CustomerAccount fromJson(Map<String, dynamic> json) => CustomerAccount(
@@ -16,6 +20,8 @@ class CustomerAccount {
         fname: json['fname'],
         lname: json['lname'],
         email: json['email'],
+        phoneNumber: json['phoneNumber'],
+        address: json['address'],
       );
 
   Map<String, dynamic> toJson() => {
@@ -23,5 +29,7 @@ class CustomerAccount {
         'fname': fname,
         'lname': lname,
         'email': email,
+        'phoneNumber': phoneNumber,
+        'address': address,
       };
 }

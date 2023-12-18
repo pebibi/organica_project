@@ -1,23 +1,22 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:organica_project/AddToCart.dart';
 import 'package:organica_project/Customer/Cart.dart';
 import 'package:organica_project/productData.dart';
 
-class ProductPage extends StatefulWidget {
+class UpdateCart extends StatefulWidget {
   final Product product;
 
-  const ProductPage({
+  const UpdateCart({
     Key? key,
     required this.product,
   }) : super(key: key);
 
   @override
-  State<ProductPage> createState() => _ProductPageState();
+  State<UpdateCart> createState() => _UpdateCartState();
 }
 
-class _ProductPageState extends State<ProductPage> {
+class _UpdateCartState extends State<UpdateCart> {
   int quantity = 1;
   String errorMessage = "";
   bool isError = false;
@@ -223,7 +222,7 @@ class _ProductPageState extends State<ProductPage> {
                     height: 50,
                     child: ElevatedButton(
                       onPressed: () {
-                        submitProduct();
+                        updateProduct(widget.product.id);
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Color.fromARGB(255, 2, 68, 11),
@@ -232,7 +231,7 @@ class _ProductPageState extends State<ProductPage> {
                         ),
                       ),
                       child: Text(
-                        'Add to Cart',
+                        'Update the Cart',
                         style: GoogleFonts.raleway(
                           fontSize: 20,
                           color: Colors.white,
@@ -249,35 +248,25 @@ class _ProductPageState extends State<ProductPage> {
     );
   }
 
-  Future<void> submitProduct() async {
+  Future<void> updateProduct(String id) async {
     try {
       final docProduct =
-          FirebaseFirestore.instance.collection('addToCart').doc();
+          FirebaseFirestore.instance.collection('addToCart').doc(id);
 
       final total = quantity * widget.product.price;
 
-      final newCart = AddToCart(
-        id: docProduct.id,
-        title: widget.product.title,
-        price: widget.product.price,
-        totalPrice: total,
-        description: widget.product.description,
-        category: widget.product.category,
-        available: widget.product.available,
-        quantity: quantity,
-      );
-
-      await docProduct.set(newCart.toJson());
-
-      setState(() {
-        isError = false;
-        errorMessage = '';
+      docProduct.update({
+        'title': widget.product.title,
+        'price': widget.product.price,
+        'totalPrice': total,
+        'description': widget.product.description,
+        'quantity': quantity,
       });
 
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => Cart(cartItems: []),
+          builder: (context) => const Cart(cartItems: []),
         ),
       );
     } catch (error) {

@@ -6,20 +6,24 @@ import 'package:organica_project/Customer/SignIn.dart';
 import 'package:organica_project/CustomerAccount.dart';
 import 'package:organica_project/authenticatorCustomer.dart';
 
-class SignUp extends StatefulWidget {
-  const SignUp({super.key});
+class EditProfile extends StatefulWidget {
+  const EditProfile({
+    super.key,
+    required this.customerAccount,
+  });
+
+  final CustomerAccount customerAccount;
 
   @override
-  State<SignUp> createState() => _SignUpState();
+  State<EditProfile> createState() => _EditProfileState();
 }
 
-class _SignUpState extends State<SignUp> {
+class _EditProfileState extends State<EditProfile> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextEditingController fnameController = TextEditingController();
   TextEditingController lnameController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-  TextEditingController confirmpasswordController = TextEditingController();
+  TextEditingController phoneNumberController = TextEditingController();
+  TextEditingController addressController = TextEditingController();
   late String errormessage;
   late bool isError;
   bool passToggle = true;
@@ -129,9 +133,9 @@ class _SignUpState extends State<SignUp> {
                         ),
                         const SizedBox(height: 10),
                         TextFormField(
-                          controller: emailController,
+                          controller: phoneNumberController,
                           decoration: InputDecoration(
-                            labelText: 'Email Address',
+                            labelText: 'Phone Number',
                             prefixIcon: const Icon(Icons.email),
                             labelStyle: GoogleFonts.raleway(),
                             border: OutlineInputBorder(
@@ -141,21 +145,10 @@ class _SignUpState extends State<SignUp> {
                         ),
                         const SizedBox(height: 10),
                         TextFormField(
-                          controller: passwordController,
-                          obscureText: passToggle,
+                          controller: addressController,
                           decoration: InputDecoration(
-                            labelText: 'Password',
-                            prefixIcon: const Icon(Icons.lock),
-                            suffix: InkWell(
-                              onTap: () {
-                                setState(() {
-                                  passToggle = !passToggle;
-                                });
-                              },
-                              child: Icon(passToggle
-                                  ? Icons.visibility
-                                  : Icons.visibility_off),
-                            ),
+                            labelText: 'Address',
+                            prefixIcon: const Icon(Icons.email),
                             labelStyle: GoogleFonts.raleway(),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(15),
@@ -163,40 +156,10 @@ class _SignUpState extends State<SignUp> {
                           ),
                         ),
                         const SizedBox(height: 10),
-                        TextFormField(
-                          controller: confirmpasswordController,
-                          obscureText: true,
-                          decoration: InputDecoration(
-                            labelText: 'Confirm Password',
-                            prefixIcon: const Icon(Icons.lock),
-                            suffix: InkWell(
-                              onTap: () {
-                                setState(() {
-                                  passToggleConfirm = !passToggleConfirm;
-                                });
-                              },
-                              child: Icon(passToggleConfirm
-                                  ? Icons.visibility
-                                  : Icons.visibility_off),
-                            ),
-                            labelStyle: GoogleFonts.raleway(),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                          ),
-                          validator: (value) {
-                            if (value != passwordController.text) {
-                              return 'Passwords do not match';
-                            }
-                            return null;
-                          },
-                        ),
                         const SizedBox(height: 20),
                         ElevatedButton(
                           onPressed: () {
-                            if (_formKey.currentState!.validate()) {
-                              registerUserCustomer();
-                            }
+                            updateCustomer(widget.customerAccount.id);
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor:
@@ -210,7 +173,7 @@ class _SignUpState extends State<SignUp> {
                             width: double.infinity,
                             child: Center(
                               child: Text(
-                                "Register",
+                                "Update Profile",
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 20,
@@ -227,25 +190,6 @@ class _SignUpState extends State<SignUp> {
                                 style: errortxtstyle,
                               )
                             : Container(),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              "Already have an account?",
-                              style: GoogleFonts.raleway(),
-                            ),
-                            TextButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => const SignIn()),
-                                );
-                              },
-                              child: const Text("Sign In"),
-                            ),
-                          ],
-                        ),
                       ],
                     ),
                   ),
@@ -270,53 +214,16 @@ class _SignUpState extends State<SignUp> {
     fontSize: 38,
   );
 
-  Future createUserCustomer() async {
-    final user = FirebaseAuth.instance.currentUser!;
-    final userid = user.uid;
+  Future updateCustomer(String id) async {
     final docUser =
-        FirebaseFirestore.instance.collection('CustomerAccount').doc(userid);
+        FirebaseFirestore.instance.collection('CustomerAccount').doc(id);
 
-    final customerAccount = CustomerAccount(
-      id: userid,
-      fname: fnameController.text,
-      lname: lnameController.text,
-      email: emailController.text,
-    );
-    final json = customerAccount.toJson();
-    await docUser.set(json);
-
-    goToAuthenticator() {
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) => const AuthenticatorCustomer(),
-        ),
-      );
-    }
-  }
-
-  Future registerUserCustomer() async {
-    try {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: emailController.text.trim(),
-        password: passwordController.text.trim(),
-      );
-      createUserCustomer();
-      setState(() {
-        errormessage = "";
-      });
-    } on FirebaseAuthException catch (e) {
-      print(e);
-      setState(() {
-        errormessage = e.message.toString();
-      });
-    }
-  }
-
-  goToAuthenticator() {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => const AuthenticatorCustomer(),
-      ),
-    );
+    docUser.update({
+      'fname': fnameController.text,
+      'lname': lnameController.text,
+      'phoneNumber': phoneNumberController.text,
+      'address': addressController.text
+    });
+    Navigator.pop(context);
   }
 }

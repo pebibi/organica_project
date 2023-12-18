@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:organica_project/Customer/RegisterCustomer.dart';
 
-class SignIn extends StatefulWidget {
-  const SignIn({Key? key}) : super(key: key);
+class SignIn_admin extends StatefulWidget {
+  const SignIn_admin({Key? key}) : super(key: key);
 
   @override
-  State<SignIn> createState() => _SignInState();
+  State<SignIn_admin> createState() => _SignIn_adminState();
 }
 
-class _SignInState extends State<SignIn> {
+class _SignIn_adminState extends State<SignIn_admin> {
   TextEditingController usernamecontroller = TextEditingController();
   TextEditingController passwordcontroller = TextEditingController();
   late String errormessage;
@@ -44,17 +44,6 @@ class _SignInState extends State<SignIn> {
               ),
             ),
           ),
-          Positioned(
-            top: 40,
-            left: 10,
-            child: IconButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              icon: const Icon(Icons.arrow_back),
-              color: Colors.white,
-            ),
-          ),
           Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
@@ -73,7 +62,7 @@ class _SignInState extends State<SignIn> {
               Padding(
                 padding: const EdgeInsets.only(top: 5, left: 15, right: 15),
                 child: Text(
-                  'Please Sign in to your Account',
+                  'Please Sign In to your Admin Account',
                   style: GoogleFonts.raleway(
                     fontSize: 20,
                     color: Colors.white,
@@ -199,5 +188,6 @@ class _SignInState extends State<SignIn> {
       print(e);
       errormessage = e.message.toString();
     }
+    Navigator.pop(context);
   }
 }

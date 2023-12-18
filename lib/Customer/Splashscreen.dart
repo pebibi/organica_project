@@ -18,7 +18,7 @@ class _Splashscreen_customerState extends State<Splashscreen_customer>
     super.initState();
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
 
-    Future.delayed(const Duration(seconds: 5), () {
+    Future.delayed(const Duration(seconds: 3), () {
       Navigator.of(context).pushReplacement(MaterialPageRoute(
         builder: (_) =>
             const OnboardingPage(), //DIRI LOGIN IBUTANG OR SIGN UP BASTA SUNOD NA PAGE SA SPLASH

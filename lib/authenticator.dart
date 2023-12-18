@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:organica_project/Admin/SignInAdmin.dart';
 import 'package:organica_project/Admin/login.dart';
 import 'package:organica_project/Admin/Product_Details.dart';
 
@@ -28,7 +29,7 @@ class _AuthenticatorState extends State<Authenticator> {
           } else if (snapshot.hasData) {
             return const ProductDetails();
           } else {
-            return const AdminLogin();
+            return const SignIn_admin();
           }
         },
       ),

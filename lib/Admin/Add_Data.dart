@@ -72,49 +72,46 @@ class _AddProductState extends State<AddProduct> {
                 fit: BoxFit.cover,
               ),
             ),
-            SizedBox(
-              width: 350,
-              child: Column(
-                children: [
-                  const SizedBox(height: 15),
-                  buildDropdownButton(
-                    'Category',
-                    categories,
-                    selectedCategory,
-                    (String? newValue) {
-                      setState(() {
-                        selectedCategory = newValue!;
-                      });
-                    },
-                  ),
-                  const SizedBox(height: 15),
-                  buildDropdownButton(
-                    'Availability',
-                    availabilities,
-                    selectedAvailability,
-                    (String? newValue) {
-                      setState(() {
-                        selectedAvailability = newValue!;
-                      });
-                    },
-                  ),
-                  const SizedBox(height: 20),
-                  buildTextField(titleController, 'Product Name'),
-                  const SizedBox(height: 20),
-                  buildTextField(priceController, 'Product Price'),
-                  const SizedBox(height: 20),
-                  buildTextField(quantityController, 'Product Quantity'),
-                  const SizedBox(height: 20),
-                  buildTextField(supplierNameController, 'Supplier Name'),
-                  const SizedBox(height: 20),
-                  buildTextField(supplierAddressController, 'Supplier Address'),
-                  const SizedBox(height: 20),
-                  buildTextField(descriptionController, 'Product Description'),
-                  const SizedBox(height: 20),
-                  buildElevatedButton('SUBMIT', submitProduct),
-                  const SizedBox(height: 20),
-                ],
-              ),
+            Column(
+              children: [
+                const SizedBox(height: 15),
+                buildDropdownButton(
+                  'Category',
+                  categories,
+                  selectedCategory,
+                  (String? newValue) {
+                    setState(() {
+                      selectedCategory = newValue!;
+                    });
+                  },
+                ),
+                const SizedBox(height: 15),
+                buildDropdownButton(
+                  'Availability',
+                  availabilities,
+                  selectedAvailability,
+                  (String? newValue) {
+                    setState(() {
+                      selectedAvailability = newValue!;
+                    });
+                  },
+                ),
+                const SizedBox(height: 20),
+                buildTextField(titleController, 'Product Name'),
+                const SizedBox(height: 20),
+                buildTextField(priceController, 'Product Price'),
+                const SizedBox(height: 20),
+                buildTextField(quantityController, 'Product Quantity'),
+                const SizedBox(height: 20),
+                buildTextField(supplierNameController, 'Supplier Name'),
+                const SizedBox(height: 20),
+                buildTextField(supplierAddressController, 'Supplier Address'),
+                const SizedBox(height: 20),
+                buildTextField(descriptionController, 'Product Description'),
+                const SizedBox(height: 20),
+                buildElevatedButton('SUBMIT', submitProduct),
+                const SizedBox(height: 20),
+              ],
             ),
           ],
         ),
@@ -122,16 +119,36 @@ class _AddProductState extends State<AddProduct> {
     );
   }
 
-  Widget buildDropdownButton(String labelText, List<String> items,
-      String selectedValue, ValueChanged<String?> onChanged) {
+  Widget buildDropdownButton(
+    String labelText,
+    List<String> items,
+    String selectedValue,
+    ValueChanged<String?> onChanged,
+  ) {
     return Container(
+      width: 350, // Set the desired width
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: Color.fromARGB(255, 0, 0, 0),
+          width: 1.0,
+        ),
+        borderRadius: BorderRadius.circular(15.0),
+      ),
       child: DropdownButton<String>(
+        hint: const Text('Select Category'),
         value: selectedValue,
         onChanged: onChanged,
+        style: GoogleFonts.raleway(
+          color: Colors.black,
+          fontSize: 16.0,
+        ),
         items: items.map<DropdownMenuItem<String>>((String value) {
           return DropdownMenuItem<String>(
             value: value,
-            child: Text(value),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(value),
+            ),
           );
         }).toList(),
       ),
@@ -157,18 +174,20 @@ class _AddProductState extends State<AddProduct> {
 
   Widget buildElevatedButton(String text, VoidCallback onPressed) {
     return SizedBox(
-      width: 150,
-      height: 40,
+      width: 300,
+      height: 50,
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
+          backgroundColor: Color.fromARGB(255, 2, 68, 11),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30),
+            borderRadius: BorderRadius.circular(10),
           ),
         ),
         child: Text(
           text,
-          style: GoogleFonts.raleway(fontWeight: FontWeight.bold),
+          style: GoogleFonts.raleway(
+              fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
         ),
       ),
     );
@@ -176,7 +195,6 @@ class _AddProductState extends State<AddProduct> {
 
   Future<void> submitProduct() async {
     try {
-      // Validate inputs
       if (titleController.text.isEmpty ||
           priceController.text.isEmpty ||
           quantityController.text.isEmpty ||
@@ -201,17 +219,14 @@ class _AddProductState extends State<AddProduct> {
 
       await docProduct.set(newProduct.toJson());
 
-      // Reset error state
       setState(() {
         isError = false;
         errorMessage = '';
       });
 
-      // Clear text fields and navigate back
       clearTextFields();
       Navigator.pop(context);
     } catch (error) {
-      // Handle errors and update error message
       setState(() {
         isError = true;
         errorMessage = 'Error: $error';

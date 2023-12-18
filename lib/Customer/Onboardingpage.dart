@@ -72,11 +72,19 @@ class _OnboardingPageState extends State<OnboardingPage> {
                       );
                     },
                     style: ElevatedButton.styleFrom(
+                      backgroundColor: Color.fromARGB(255, 2, 68, 11),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30.0),
                       ),
                     ),
-                    child: const Text('Register'),
+                    child: Text(
+                      'Register',
+                      style: GoogleFonts.raleway(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
                   ),
                 ),
               ],
@@ -92,19 +100,27 @@ class _OnboardingPageState extends State<OnboardingPage> {
                   height: 40,
                   child: ElevatedButton(
                     onPressed: () {
-                      // Handle action for Login button
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const AuthenticatorCustomer()),
+                            builder: (context) =>
+                                const AuthenticatorCustomer()),
                       );
                     },
                     style: ElevatedButton.styleFrom(
+                      backgroundColor: Color.fromARGB(255, 2, 68, 11),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30.0),
                       ),
                     ),
-                    child: const Text('Sign In'),
+                    child: Text(
+                      'Sign In',
+                      style: GoogleFonts.raleway(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
                   ),
                 ),
               ],
@@ -142,7 +158,8 @@ class OnboardingContent extends StatelessWidget {
   final String description;
   final String imagePath;
 
-  const OnboardingContent({super.key, 
+  const OnboardingContent({
+    super.key,
     required this.title,
     required this.description,
     required this.imagePath,

@@ -2,22 +2,22 @@ class Product {
   final String id;
   final String title;
   final double price;
-  final int quantity;
-  final String category;
-  final String available;
-  final String supplierName;
-  final String supplierAddress;
+  final int? quantity;
+  final String? category;
+  final String? available;
+  final String? supplierName;
+  final String? supplierAddress;
   final String description;
 
   Product({
     required this.id,
     required this.title,
     required this.price,
-    required this.quantity,
-    required this.category,
-    required this.available,
-    required this.supplierName,
-    required this.supplierAddress,
+    this.quantity,
+    this.category,
+    this.available,
+    this.supplierName,
+    this.supplierAddress,
     required this.description,
   });
 
